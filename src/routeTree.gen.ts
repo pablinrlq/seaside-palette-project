@@ -14,6 +14,7 @@ import { Route as AcessoriosRouteImport } from './routes/acessorios'
 import { Route as BiquinisRouteImport } from './routes/biquinis'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ColecaoRouteImport } from './routes/colecao'
+import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as MaiosRouteImport } from './routes/maios'
 import { Route as SacolaRouteImport } from './routes/sacola'
 import { Route as SaidasRouteImport } from './routes/saidas'
@@ -44,6 +45,11 @@ const ColecaoRoute = ColecaoRouteImport.update({
   path: '/colecao',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HistoriaRoute = HistoriaRouteImport.update({
+  id: '/historia',
+  path: '/historia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MaiosRoute = MaiosRouteImport.update({
   id: '/maios',
   path: '/maios',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/biquinis': typeof BiquinisRoute
   '/checkout': typeof CheckoutRoute
   '/colecao': typeof ColecaoRoute
+  '/historia': typeof HistoriaRoute
   '/maios': typeof MaiosRoute
   '/sacola': typeof SacolaRoute
   '/saidas': typeof SaidasRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/biquinis': typeof BiquinisRoute
   '/checkout': typeof CheckoutRoute
   '/colecao': typeof ColecaoRoute
+  '/historia': typeof HistoriaRoute
   '/maios': typeof MaiosRoute
   '/sacola': typeof SacolaRoute
   '/saidas': typeof SaidasRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/biquinis': typeof BiquinisRoute
   '/checkout': typeof CheckoutRoute
   '/colecao': typeof ColecaoRoute
+  '/historia': typeof HistoriaRoute
   '/maios': typeof MaiosRoute
   '/sacola': typeof SacolaRoute
   '/saidas': typeof SaidasRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/biquinis'
     | '/checkout'
     | '/colecao'
+    | '/historia'
     | '/maios'
     | '/sacola'
     | '/saidas'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/biquinis'
     | '/checkout'
     | '/colecao'
+    | '/historia'
     | '/maios'
     | '/sacola'
     | '/saidas'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/biquinis'
     | '/checkout'
     | '/colecao'
+    | '/historia'
     | '/maios'
     | '/sacola'
     | '/saidas'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   BiquinisRoute: typeof BiquinisRoute
   CheckoutRoute: typeof CheckoutRoute
   ColecaoRoute: typeof ColecaoRoute
+  HistoriaRoute: typeof HistoriaRoute
   MaiosRoute: typeof MaiosRoute
   SacolaRoute: typeof SacolaRoute
   SaidasRoute: typeof SaidasRoute
@@ -184,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ColecaoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/historia': {
+      id: '/historia'
+      path: '/historia'
+      fullPath: '/historia'
+      preLoaderRoute: typeof HistoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/maios': {
       id: '/maios'
       path: '/maios'
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   BiquinisRoute: BiquinisRoute,
   CheckoutRoute: CheckoutRoute,
   ColecaoRoute: ColecaoRoute,
+  HistoriaRoute: HistoriaRoute,
   MaiosRoute: MaiosRoute,
   SacolaRoute: SacolaRoute,
   SaidasRoute: SaidasRoute,
