@@ -1,0 +1,6 @@
+import { Link } from "@tanstack/react-router";
+import { ShoppingBag } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { money, type Product } from "@/lib/catalog";
+import { useStore } from "./store-context";
+export function ProductCard({product}:{product:Product}){const {add}=useStore();const defaultSize=product.sizes[0]??"Único";return <article className="group min-w-0"><Link to="/produto/$slug" params={{slug:product.slug}} className="block overflow-hidden bg-card"><img src={product.image} alt={product.name} width={960} height={1200} loading="lazy" className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"/></Link><div className="flex items-start justify-between gap-3 pt-4"><div><p className="mb-1 text-xs uppercase tracking-[.18em] text-muted-foreground">{product.category}</p><Link to="/produto/$slug" params={{slug:product.slug}} className="font-serif text-xl text-foreground hover:text-primary">{product.name}</Link><p className="mt-1 text-sm text-muted-foreground">{money(product.price)} · 6x sem juros</p></div><Button size="icon" variant="ghost" aria-label={`Adicionar ${product.name} à sacola`} onClick={()=>add(product,defaultSize)}><ShoppingBag/></Button></div></article>}

@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcessoriosRouteImport } from './routes/acessorios'
+import { Route as BiquinisRouteImport } from './routes/biquinis'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as ColecaoRouteImport } from './routes/colecao'
+import { Route as HistoriaRouteImport } from './routes/historia'
+import { Route as MaiosRouteImport } from './routes/maios'
+import { Route as SacolaRouteImport } from './routes/sacola'
+import { Route as SaidasRouteImport } from './routes/saidas'
+import { Route as ProdutoSlugRouteImport } from './routes/produto.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcessoriosRoute = AcessoriosRouteImport.update({
+  id: '/acessorios',
+  path: '/acessorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BiquinisRoute = BiquinisRouteImport.update({
+  id: '/biquinis',
+  path: '/biquinis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ColecaoRoute = ColecaoRouteImport.update({
+  id: '/colecao',
+  path: '/colecao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoriaRoute = HistoriaRouteImport.update({
+  id: '/historia',
+  path: '/historia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaiosRoute = MaiosRouteImport.update({
+  id: '/maios',
+  path: '/maios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SacolaRoute = SacolaRouteImport.update({
+  id: '/sacola',
+  path: '/sacola',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SaidasRoute = SaidasRouteImport.update({
+  id: '/saidas',
+  path: '/saidas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutoSlugRoute = ProdutoSlugRouteImport.update({
+  id: '/produto/$slug',
+  path: '/produto/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acessorios': typeof AcessoriosRoute
+  '/biquinis': typeof BiquinisRoute
+  '/checkout': typeof CheckoutRoute
+  '/colecao': typeof ColecaoRoute
+  '/historia': typeof HistoriaRoute
+  '/maios': typeof MaiosRoute
+  '/sacola': typeof SacolaRoute
+  '/saidas': typeof SaidasRoute
+  '/produto/$slug': typeof ProdutoSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acessorios': typeof AcessoriosRoute
+  '/biquinis': typeof BiquinisRoute
+  '/checkout': typeof CheckoutRoute
+  '/colecao': typeof ColecaoRoute
+  '/historia': typeof HistoriaRoute
+  '/maios': typeof MaiosRoute
+  '/sacola': typeof SacolaRoute
+  '/saidas': typeof SaidasRoute
+  '/produto/$slug': typeof ProdutoSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/acessorios': typeof AcessoriosRoute
+  '/biquinis': typeof BiquinisRoute
+  '/checkout': typeof CheckoutRoute
+  '/colecao': typeof ColecaoRoute
+  '/historia': typeof HistoriaRoute
+  '/maios': typeof MaiosRoute
+  '/sacola': typeof SacolaRoute
+  '/saidas': typeof SaidasRoute
+  '/produto/$slug': typeof ProdutoSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/acessorios'
+    | '/biquinis'
+    | '/checkout'
+    | '/colecao'
+    | '/historia'
+    | '/maios'
+    | '/sacola'
+    | '/saidas'
+    | '/produto/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/acessorios'
+    | '/biquinis'
+    | '/checkout'
+    | '/colecao'
+    | '/historia'
+    | '/maios'
+    | '/sacola'
+    | '/saidas'
+    | '/produto/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/acessorios'
+    | '/biquinis'
+    | '/checkout'
+    | '/colecao'
+    | '/historia'
+    | '/maios'
+    | '/sacola'
+    | '/saidas'
+    | '/produto/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcessoriosRoute: typeof AcessoriosRoute
+  BiquinisRoute: typeof BiquinisRoute
+  CheckoutRoute: typeof CheckoutRoute
+  ColecaoRoute: typeof ColecaoRoute
+  HistoriaRoute: typeof HistoriaRoute
+  MaiosRoute: typeof MaiosRoute
+  SacolaRoute: typeof SacolaRoute
+  SaidasRoute: typeof SaidasRoute
+  ProdutoSlugRoute: typeof ProdutoSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +169,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/acessorios': {
+      id: '/acessorios'
+      path: '/acessorios'
+      fullPath: '/acessorios'
+      preLoaderRoute: typeof AcessoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biquinis': {
+      id: '/biquinis'
+      path: '/biquinis'
+      fullPath: '/biquinis'
+      preLoaderRoute: typeof BiquinisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/colecao': {
+      id: '/colecao'
+      path: '/colecao'
+      fullPath: '/colecao'
+      preLoaderRoute: typeof ColecaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historia': {
+      id: '/historia'
+      path: '/historia'
+      fullPath: '/historia'
+      preLoaderRoute: typeof HistoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maios': {
+      id: '/maios'
+      path: '/maios'
+      fullPath: '/maios'
+      preLoaderRoute: typeof MaiosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sacola': {
+      id: '/sacola'
+      path: '/sacola'
+      fullPath: '/sacola'
+      preLoaderRoute: typeof SacolaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saidas': {
+      id: '/saidas'
+      path: '/saidas'
+      fullPath: '/saidas'
+      preLoaderRoute: typeof SaidasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produto/$slug': {
+      id: '/produto/$slug'
+      path: '/produto/$slug'
+      fullPath: '/produto/$slug'
+      preLoaderRoute: typeof ProdutoSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcessoriosRoute: AcessoriosRoute,
+  BiquinisRoute: BiquinisRoute,
+  CheckoutRoute: CheckoutRoute,
+  ColecaoRoute: ColecaoRoute,
+  HistoriaRoute: HistoriaRoute,
+  MaiosRoute: MaiosRoute,
+  SacolaRoute: SacolaRoute,
+  SaidasRoute: SaidasRoute,
+  ProdutoSlugRoute: ProdutoSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

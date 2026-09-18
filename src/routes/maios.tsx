@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { CatalogPage } from "@/components/store/catalog-page";
+export const Route=createFileRoute("/maios")({head:()=>({meta:[{title:"Maiôs — Água Limpa Beachwear"},{name:"description",content:"Silhuetas marcantes, conforto e elegância em cada detalhe."},{property:"og:title",content:"Maiôs — Água Limpa Beachwear"},{property:"og:description",content:"Silhuetas marcantes, conforto e elegância em cada detalhe."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:()=> <CatalogPage title="Maiôs" intro="Silhuetas marcantes, conforto e elegância em cada detalhe." category="Maiôs"/>});
