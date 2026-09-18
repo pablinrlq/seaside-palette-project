@@ -1,24 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+import hero from "@/assets/hero-beach.jpg";
+import selo from "@/assets/agua-limpa-selo.png.asset.json";
+import { products } from "@/lib/catalog";
+import { ProductCard } from "@/components/store/product-card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+export const Route=createFileRoute("/")({head:()=>({meta:[{title:"Água Limpa Beachwear — Sol, mar e liberdade"},{name:"description",content:"Moda praia feminina sofisticada e leve para viver o verão com liberdade."},{property:"og:title",content:"Água Limpa Beachwear"},{property:"og:description",content:"Sol, mar e liberdade em uma coleção feminina e atemporal."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:Index});
+function Index(){return <main><section className="relative min-h-[72vh] overflow-hidden"><img src={hero} alt="Mulher usando maiô turquesa à beira-mar" width={1440} height={1200} className="absolute inset-0 h-full w-full object-cover object-center"/><div className="absolute inset-0 bg-foreground/15"/><div className="section-shell relative flex min-h-[72vh] items-end pb-14 md:items-center md:pb-0"><div className="max-w-lg text-card"><p className="mb-4 text-xs font-semibold uppercase tracking-[.25em]">Coleção Alto Verão</p><h1 className="text-5xl leading-[.95] md:text-7xl">Vista o seu verão</h1><p className="mt-5 max-w-sm leading-7">Peças que acompanham o corpo com leveza, do primeiro mergulho ao fim da tarde.</p><Button asChild size="lg" className="mt-7"><Link to="/colecao">Descubra a coleção <ArrowRight/></Link></Button></div></div></section><section className="section-shell py-20"><div className="mb-9 flex items-end justify-between"><div><p className="eyebrow">Escolha o seu momento</p><h2 className="mt-2 text-4xl md:text-5xl">Feitas para o mar</h2></div><Link to="/colecao" className="hidden text-sm text-primary underline-offset-4 hover:underline sm:block">Ver tudo</Link></div><div className="grid grid-cols-2 gap-4 md:grid-cols-4">{products.slice(0,4).map(p=><ProductCard key={p.id} product={p}/>)}</div></section><section className="bg-accent py-16"><div className="section-shell grid items-center gap-10 md:grid-cols-[1fr_1.4fr]"><img src={selo.url} alt="Selo Água Limpa Beachwear" className="mx-auto w-52 mix-blend-multiply md:w-64"/><div><p className="eyebrow">Nosso manifesto</p><h2 className="mt-3 text-5xl md:text-7xl">SOL • MAR • LIBERDADE</h2><p className="mt-5 max-w-xl leading-7 text-muted-foreground">Acreditamos em dias sem pressa, pele salgada e peças que revelam a beleza natural de cada mulher.</p><Button asChild variant="outline" className="mt-7"><Link to="/historia">Conheça nossa história</Link></Button></div></div></section><section className="section-shell py-20 text-center"><p className="eyebrow">Cartas da praia</p><h2 className="mt-3 text-4xl">Receba novidades da maré</h2><p className="mx-auto mt-3 max-w-lg text-sm text-muted-foreground">Lançamentos, inspirações e condições especiais, com a leveza que você merece.</p><form className="mx-auto mt-7 flex max-w-lg gap-2" onSubmit={e=>e.preventDefault()}><Input type="email" placeholder="Seu melhor e-mail" aria-label="Seu melhor e-mail" required/><Button type="submit">Quero receber</Button></form></section></main>}
