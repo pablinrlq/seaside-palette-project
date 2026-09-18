@@ -5,3 +5,10 @@
 - [x] Criar sacola e checkout visual
 - [x] Ajustar apresentação do logotipo no cabeçalho
 - [x] Validar todas as páginas e fluxos principais
+- [ ] Enriquecer o visual da loja sem alterar a identidade
+- [ ] Refinar toda a experiência para celular
+- [ ] Criar catálogo local editável com estoque e categorias
+- [ ] Criar painel administrativo completo em /admin
+- [ ] Conectar alterações do painel à vitrine local
+- [ ] Implementar importação e exportação do catálogo
+- [ ] Validar os novos fluxos em desktop e celular
