@@ -11,4 +11,4 @@
 - [x] Criar painel administrativo completo em /admin
 - [x] Conectar alterações do painel à vitrine local
 - [x] Implementar importação e exportação do catálogo
-- [ ] Validar os novos fluxos em desktop e celular
+- [x] Validar os novos fluxos em desktop e celular
