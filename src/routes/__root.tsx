@@ -13,6 +13,8 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteShell } from "../components/store/site-shell";
 import { StoreProvider } from "../components/store/store-context";
+import { CatalogProvider } from "../components/store/catalog-context";
+import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -104,7 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>
@@ -122,7 +124,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <StoreProvider><SiteShell><Outlet /></SiteShell></StoreProvider>
+      <CatalogProvider><StoreProvider><SiteShell><Outlet /></SiteShell><Toaster position="top-center" richColors /></StoreProvider></CatalogProvider>
     </QueryClientProvider>
   );
 }

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcessoriosRouteImport } from './routes/acessorios'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BiquinisRouteImport } from './routes/biquinis'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ColecaoRouteImport } from './routes/colecao'
@@ -28,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const AcessoriosRoute = AcessoriosRouteImport.update({
   id: '/acessorios',
   path: '/acessorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BiquinisRoute = BiquinisRouteImport.update({
@@ -74,6 +80,7 @@ const ProdutoSlugRoute = ProdutoSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/acessorios': typeof AcessoriosRoute
+  '/admin': typeof AdminRoute
   '/biquinis': typeof BiquinisRoute
   '/checkout': typeof CheckoutRoute
   '/colecao': typeof ColecaoRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acessorios': typeof AcessoriosRoute
+  '/admin': typeof AdminRoute
   '/biquinis': typeof BiquinisRoute
   '/checkout': typeof CheckoutRoute
   '/colecao': typeof ColecaoRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/acessorios': typeof AcessoriosRoute
+  '/admin': typeof AdminRoute
   '/biquinis': typeof BiquinisRoute
   '/checkout': typeof CheckoutRoute
   '/colecao': typeof ColecaoRoute
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/acessorios'
+    | '/admin'
     | '/biquinis'
     | '/checkout'
     | '/colecao'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/acessorios'
+    | '/admin'
     | '/biquinis'
     | '/checkout'
     | '/colecao'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/acessorios'
+    | '/admin'
     | '/biquinis'
     | '/checkout'
     | '/colecao'
@@ -150,6 +162,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcessoriosRoute: typeof AcessoriosRoute
+  AdminRoute: typeof AdminRoute
   BiquinisRoute: typeof BiquinisRoute
   CheckoutRoute: typeof CheckoutRoute
   ColecaoRoute: typeof ColecaoRoute
@@ -174,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/acessorios'
       fullPath: '/acessorios'
       preLoaderRoute: typeof AcessoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biquinis': {
@@ -238,6 +258,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcessoriosRoute: AcessoriosRoute,
+  AdminRoute: AdminRoute,
   BiquinisRoute: BiquinisRoute,
   CheckoutRoute: CheckoutRoute,
   ColecaoRoute: ColecaoRoute,
