@@ -1,25 +1,29 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Heart, Leaf, Mail, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Sun, Waves, Truck, MoveUpRight } from "lucide-react";
 import { useState } from "react";
 import hero from "@/assets/hero-beach.jpg";
+import campaign from "@/assets/campaign-wide.webp";
+import coral from "@/assets/product-coral.jpg";
+import marina from "@/assets/product-marina.jpg";
+import brisa from "@/assets/product-brisa.jpg";
+import concha from "@/assets/product-concha.jpg";
 import { ProductCard } from "@/components/store/product-card";
 import { useCatalog } from "@/components/store/catalog-context";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { BrandLogo } from "@/components/store/brand-logo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Água Limpa Beachwear — Sol, mar e liberdade" },
+      { title: "Água Limpa Beachwear | Vista seu próximo verão" },
       {
         name: "description",
-        content: "Moda praia feminina sofisticada e leve para viver o verão com liberdade.",
+        content:
+          "Biquínis, maiôs e saídas para dias que você não quer que acabem. Descubra a coleção Água Limpa Beachwear.",
       },
-      { property: "og:title", content: "Água Limpa Beachwear" },
+      { property: "og:title", content: "Água Limpa Beachwear | Sol, mar e liberdade" },
       {
         property: "og:description",
-        content: "Sol, mar e liberdade em uma coleção feminina e atemporal.",
+        content: "Encontre sua próxima peça favorita. Conheça a coleção Água Limpa.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -27,190 +31,225 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
+const categories = [
+  { name: "Biquínis", to: "/biquinis", image: coral, caption: "Seu sol, suas regras." },
+  { name: "Maiôs", to: "/maios", image: marina, caption: "Do primeiro mergulho ao último raio." },
+  { name: "Saídas", to: "/saidas", image: brisa, caption: "Leveza para ir além da praia." },
+  { name: "Acessórios", to: "/acessorios", image: concha, caption: "O verão mora nos detalhes." },
+] as const;
+const selections = ["Destaques", "Biquínis", "Maiôs", "Saídas", "Acessórios"];
 
 function Index() {
   const { products } = useCatalog();
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-  const featured = products.filter((p) => p.featured).slice(0, 4);
-  const highlights = (featured.length ? featured : products).slice(0, 4);
-  const benefits = [
-    { icon: <Truck />, title: "Frete grátis", text: "Acima de R$ 499" },
-    { icon: <ShieldCheck />, title: "Checkout no site", text: "Preparado para Stripe" },
-    { icon: <Heart />, title: "Troca fácil", text: "Até 30 dias" },
-    { icon: <Leaf />, title: "Leve por natureza", text: "Conforto em cada detalhe" },
-  ];
+  const [selection, setSelection] = useState("Destaques");
+  const highlights = products
+    .filter((p) => (selection === "Destaques" ? p.featured : p.category === selection))
+    .slice(0, 4);
   return (
-    <main>
-      <section className="relative min-h-[82svh] overflow-hidden">
-        <img
-          src={hero}
-          alt="Mulher usando maiô turquesa à beira-mar"
-          width={1440}
-          height={1200}
-          className="absolute inset-0 h-full w-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-linear-to-b from-foreground/10 via-foreground/20 to-foreground/55" />
-        <div className="section-shell relative flex min-h-[82svh] items-end pb-12 md:items-center md:pb-0">
-          <div className="max-w-2xl text-card">
-            <BrandLogo className="mb-7 h-20 md:h-24 brightness-0 invert" />
-            <p className="mb-4 text-xs font-semibold uppercase">Coleção Alto Verão 2026</p>
-            <h1 className="max-w-xl text-5xl leading-[.94] sm:text-6xl md:text-8xl">
-              Sol, mar e liberdade
-            </h1>
-            <p className="mt-5 max-w-md text-sm leading-7 sm:text-base">
-              Moda praia feminina com acabamento premium, tons claros e peças que acompanham seu
-              verão sem esforço.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link to="/colecao">
-                  Comprar coleção <ArrowRight />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-card bg-card/10 text-card hover:border-primary hover:bg-card hover:text-foreground"
-              >
-                <Link to="/checkout">Ver checkout</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-0 right-0 hidden border-l border-t border-card/40 bg-background/95 px-8 py-5 backdrop-blur md:block">
-          <p className="font-serif text-2xl text-foreground">Água Limpa Beachwear</p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Identidade atualizada com logos transparentes
+    <main id="conteudo">
+      <section className="campaign-hero">
+        <picture>
+          <source media="(min-width: 768px)" srcSet={campaign} />
+          <img
+            src={hero}
+            alt="Moda praia Água Limpa, com maiô verde em uma praia de águas cristalinas"
+            width={1440}
+            height={1200}
+            fetchPriority="high"
+            className="campaign-image"
+          />
+        </picture>
+        <div className="section-shell campaign-content">
+          <p className="campaign-eyebrow">
+            <span /> A estação é sua.
           </p>
+          <h1 aria-label="Água Limpa Beachwear">
+            Água
+            <br />
+            <em>Limpa.</em>
+          </h1>
+          <p className="campaign-subtitle">Vista a liberdade de ser você.</p>
+          <Link to="/colecao" className="shop-button shop-button-light">
+            Encontrar meu verão <ArrowUpRight size={18} />
+          </Link>
+          <a href="#favoritos" className="campaign-scroll">
+            <ArrowDown size={14} /> Um novo dia. Sua nova peça favorita.
+          </a>
+        </div>
+        <p className="campaign-side">BEACHWEAR · SOL, MAR & LIBERDADE</p>
+        <div className="campaign-caption">
+          <span>DIAS DE SOL / ÁGUA LIMPA</span>
+          <span>Feita para estar com você.</span>
         </div>
       </section>
-      <section className="border-b border-border bg-card">
-        <div className="section-shell grid grid-cols-2 divide-x divide-y divide-border md:grid-cols-4 md:divide-y-0">
-          {benefits.map((item) => (
-            <div key={item.title} className="flex min-h-28 items-center gap-3 px-3 py-5 sm:px-6">
-              <span className="shrink-0 text-primary [&_svg]:h-5 [&_svg]:w-5">{item.icon}</span>
-              <div>
-                <p className="text-xs font-semibold">{item.title}</p>
-                <p className="mt-1 text-[10px] text-muted-foreground sm:text-xs">{item.text}</p>
-              </div>
-            </div>
-          ))}
+      <section className="promise-strip" aria-label="Água Limpa">
+        <div className="section-shell">
+          <span>
+            <Truck /> Frete grátis a partir de R$ 499
+          </span>
+          <span>
+            <Sun /> Para todos os seus dias de sol
+          </span>
+          <span>
+            <Waves /> Leveza em cada movimento
+          </span>
         </div>
       </section>
-      <section className="section-shell py-16 md:py-24">
-        <div className="mb-9 flex items-end justify-between">
+      <section id="favoritos" className="section-shell collection-section">
+        <div className="section-heading">
           <div>
-            <p className="eyebrow">Curadoria da maré</p>
-            <h2 className="mt-2 text-4xl md:text-6xl">Feitas para o mar</h2>
-            <p className="mt-3 max-w-md text-sm leading-6 text-muted-foreground">
-              Texturas suaves, formas atemporais e tons que guardam a memória de dias claros.
-            </p>
+            <p className="eyebrow">O sol chama. Você escolhe.</p>
+            <h2>
+              Seu próximo <em>favorito.</em>
+            </h2>
           </div>
-          <Link
-            to="/colecao"
-            className="hidden items-center gap-2 text-sm font-semibold text-primary hover:text-foreground sm:flex"
-          >
-            Ver coleção <ArrowRight className="h-4 w-4" />
+          <Link to="/colecao" className="text-link">
+            Toda a coleção <ArrowUpRight size={17} />
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-x-3 gap-y-10 md:gap-6 lg:grid-cols-4">
+        <div className="collection-tabs" role="tablist" aria-label="Seleção de produtos">
+          {selections.map((item, index) => (
+            <button
+              key={item}
+              id={"tab-" + item}
+              type="button"
+              role="tab"
+              tabIndex={selection === item ? 0 : -1}
+              aria-selected={selection === item}
+              aria-controls="featured-products"
+              onClick={() => setSelection(item)}
+              onKeyDown={(event) => {
+                const next =
+                  event.key === "ArrowRight"
+                    ? (index + 1) % selections.length
+                    : event.key === "ArrowLeft"
+                      ? (index + selections.length - 1) % selections.length
+                      : event.key === "Home"
+                        ? 0
+                        : event.key === "End"
+                          ? selections.length - 1
+                          : -1;
+                if (next < 0) return;
+                event.preventDefault();
+                setSelection(selections[next] ?? "Destaques");
+                event.currentTarget.parentElement
+                  ?.querySelectorAll<HTMLButtonElement>("button")
+                  [next]?.focus();
+              }}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+        <div
+          id="featured-products"
+          role="tabpanel"
+          aria-labelledby={"tab-" + selection}
+          className="product-grid"
+        >
           {highlights.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
-        </div>
-        <Button asChild variant="outline" className="mt-10 w-full sm:hidden">
-          <Link to="/colecao">Ver coleção completa</Link>
-        </Button>
-      </section>
-      <section className="section-shell pb-16 md:pb-24">
-        <div className="grid overflow-hidden bg-card md:grid-cols-2">
-          <div className="relative min-h-96 md:min-h-[600px]">
-            <img
-              src={products[1]?.image ?? hero}
-              alt="Seleção de maiôs Água Limpa"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <span className="absolute left-5 top-5 bg-card px-4 py-2 text-[10px] font-semibold uppercase">
-              Essencial da estação
-            </span>
-          </div>
-          <div className="flex items-center bg-secondary p-8 md:p-14">
-            <div>
-              <Sparkles className="mb-7 h-7 w-7 text-accent" />
-              <p className="eyebrow">Do mergulho ao pôr do sol</p>
-              <h2 className="mt-3 text-5xl leading-none md:text-7xl">Um maiô, infinitos verões</h2>
-              <p className="mt-6 max-w-md leading-7 text-secondary-foreground">
-                Modelagens que abraçam sem apertar e revelam a beleza natural do movimento.
-              </p>
-              <Button asChild className="mt-8">
-                <Link to="/maios">
-                  Descubra os maiôs <ArrowRight />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="bg-primary py-16 text-primary-foreground md:py-24">
-        <div className="section-shell grid items-center gap-10 md:grid-cols-[.8fr_1.2fr]">
-          <BrandLogo seal className="mx-auto h-48 w-48 md:h-72 md:w-72 brightness-0 invert" />
-          <div>
-            <p className="text-xs font-bold uppercase">Nosso manifesto</p>
-            <h2 className="mt-3 text-5xl leading-none md:text-7xl">SOL • MAR • LIBERDADE</h2>
-            <p className="mt-5 max-w-xl leading-7 text-primary-foreground/85">
-              Acreditamos em dias sem pressa, pele salgada e peças que revelam a beleza natural de
-              cada mulher.
-            </p>
-            <Button
-              asChild
-              variant="outline"
-              className="mt-7 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-            >
-              <Link to="/historia">Conheça nossa história</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-      <section className="section-shell py-16 md:py-24">
-        <div className="overflow-hidden border border-border bg-card px-5 py-12 text-center sm:px-10 md:py-16">
-          <Mail className="mx-auto h-7 w-7 text-primary" />
-          <p className="eyebrow mt-5">Cartas da praia</p>
-          <h2 className="mt-3 text-4xl md:text-5xl">Receba novidades da maré</h2>
-          <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-muted-foreground">
-            Lançamentos, inspirações e condições especiais, com a leveza que você merece.
-          </p>
-          {subscribed ? (
-            <div className="mx-auto mt-7 flex max-w-lg items-center justify-center gap-2 bg-secondary p-4 text-sm font-semibold">
-              <Check className="text-primary" /> Sua carta já está a caminho.
-            </div>
-          ) : (
-            <form
-              className="mx-auto mt-7 flex max-w-lg flex-col gap-2 sm:flex-row"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (email) {
-                  setSubscribed(true);
-                  setEmail("");
-                }
-              }}
-            >
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Seu melhor e-mail"
-                aria-label="Seu melhor e-mail"
-                required
-                className="h-11"
-              />
-              <Button type="submit" size="lg">
-                Quero receber
-              </Button>
-            </form>
+          {!highlights.length && (
+            <p className="py-10 text-sm text-muted-foreground">Novas peças estão chegando.</p>
           )}
         </div>
+      </section>
+      <section className="category-section">
+        <div className="section-shell">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Encontre o seu ritmo</p>
+              <h2>
+                Qual é o seu <em>verão?</em>
+              </h2>
+            </div>
+            <p className="section-note">
+              Do mergulho ao encontro depois da praia.
+              <br />
+              Uma peça para cada momento seu.
+            </p>
+          </div>
+          <div className="category-grid">
+            {categories.map((category, i) => (
+              <Link to={category.to} key={category.to} className="category-item">
+                <div className="category-image">
+                  <img
+                    src={category.image}
+                    alt={category.name + " Água Limpa"}
+                    loading="lazy"
+                    width={960}
+                    height={1200}
+                  />
+                  <span className="category-index">0{i + 1}</span>
+                  <span className="category-arrow">
+                    <ArrowUpRight />
+                  </span>
+                </div>
+                <h3>{category.name}</h3>
+                <p>{category.caption}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="editorial-section">
+        <div className="editorial-photo">
+          <img
+            src={hero}
+            alt="Maiô Água Limpa em um dia de sol à beira-mar"
+            loading="lazy"
+            width={1440}
+            height={1200}
+          />
+          <span>UM CONVITE A VIVER LÁ FORA.</span>
+        </div>
+        <div className="editorial-copy">
+          <p className="eyebrow">Menos pressa. Mais mar.</p>
+          <h2>
+            O melhor
+            <br />
+            do verão é<br />
+            <em>sentir.</em>
+          </h2>
+          <p>
+            O sol na pele. O sal no cabelo. A leveza de uma peça que acompanha você. A Água Limpa é
+            um convite para colecionar esses momentos.
+          </p>
+          <Link to="/historia" className="text-link">
+            Mergulhe na nossa história <ArrowUpRight size={18} />
+          </Link>
+          <BrandLogo seal className="editorial-seal" />
+        </div>
+      </section>
+      <section className="summer-note">
+        <div className="section-shell">
+          <Sun size={30} strokeWidth={1} />
+          <p>
+            Um lugar ao sol.
+            <br />
+            <em>Uma peça que é sua.</em>
+          </p>
+          <Link to="/colecao" className="shop-button">
+            Escolha a sua <ArrowRight size={18} />
+          </Link>
+        </div>
+      </section>
+      <section className="section-shell contact-band">
+        <div>
+          <p className="eyebrow">Vamos conversar?</p>
+          <h2>
+            Seu verão começa
+            <br />
+            com uma boa escolha.
+          </h2>
+        </div>
+        <a href="mailto:oi@agualimpa.com.br" className="contact-link">
+          <span>
+            Fale com a Água Limpa<small>oi@agualimpa.com.br</small>
+          </span>
+          <MoveUpRight size={25} strokeWidth={1} />
+        </a>
       </section>
     </main>
   );

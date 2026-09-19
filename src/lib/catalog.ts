@@ -3,6 +3,18 @@ import marina from "@/assets/product-marina.jpg";
 import brisa from "@/assets/product-brisa.jpg";
 import concha from "@/assets/product-concha.jpg";
 
+const colorSwatches: Record<string, string> = {
+  Cacau: "#654334",
+  Marrom: "#765341",
+  Turquesa: "#4ca89a",
+  Água: "#65b8b0",
+  Espuma: "#f2f1e9",
+  Creme: "#e8e7d9",
+  Natural: "#c8b894",
+  Palha: "#c3aa7f",
+};
+export const productColor = (color: string) => colorSwatches[color] ?? "#91a8a0";
+
 export type Product = {
   id: string;
   slug: string;

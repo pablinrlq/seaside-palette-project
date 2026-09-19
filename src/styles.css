@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "./storefront.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -70,25 +71,25 @@
   --marrom-logo: #7a553f;
   --branco-espuma: #fffdf9;
   --radius: 0.25rem;
-  --background: oklch(0.992 0.004 196);
-  --foreground: oklch(0.31 0.052 190);
-  --card: oklch(0.999 0.002 110);
-  --card-foreground: oklch(0.31 0.052 190);
+  --background: oklch(0.998 0 0);
+  --foreground: oklch(0.29 0.038 168);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.29 0.038 168);
   --popover: oklch(0.999 0.002 110);
   --popover-foreground: oklch(0.31 0.052 190);
-  --primary: oklch(0.64 0.105 190);
+  --primary: oklch(0.35 0.063 168);
   --primary-foreground: oklch(0.995 0.004 105);
-  --secondary: oklch(0.955 0.022 186);
-  --secondary-foreground: oklch(0.29 0.06 190);
-  --muted: oklch(0.962 0.012 185);
-  --muted-foreground: oklch(0.52 0.033 195);
-  --accent: oklch(0.74 0.14 32);
-  --accent-foreground: oklch(0.995 0.004 105);
+  --secondary: oklch(0.961 0.016 147);
+  --secondary-foreground: oklch(0.29 0.038 168);
+  --muted: oklch(0.965 0.004 147);
+  --muted-foreground: oklch(0.49 0.017 168);
+  --accent: oklch(0.91 0.099 118);
+  --accent-foreground: oklch(0.29 0.038 168);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.88 0.018 190);
-  --input: oklch(0.88 0.018 190);
-  --ring: oklch(0.64 0.105 190);
+  --border: oklch(0.9 0.009 147);
+  --input: oklch(0.83 0.013 147);
+  --ring: oklch(0.35 0.063 168);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -149,7 +150,6 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     letter-spacing: 0;
-    overflow-x: hidden;
   }
   h1,
   h2,
@@ -186,11 +186,14 @@
 }
 @utility section-shell {
   width: 100%;
-  max-width: 80rem;
+  max-width: 88rem;
   margin-inline: auto;
   padding-inline: 1rem;
   @media (min-width: 640px) {
-    padding-inline: 1.5rem;
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 3rem;
   }
 }
 @utility eyebrow {
@@ -199,13 +202,6 @@
   letter-spacing: 0;
   color: var(--color-primary);
   font-weight: 700;
-}
-footer a,
-footer span {
-  display: block;
-  margin-top: 0.55rem;
-  font-size: 0.82rem;
-  color: var(--color-muted-foreground);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,248 +1,224 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import {
-  ArrowRight,
-  CheckCircle2,
-  CreditCard,
-  Landmark,
-  LockKeyhole,
-  QrCode,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, CreditCard, LockKeyhole, QrCode, ShoppingBag } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@/components/store/store-context";
 import { money } from "@/lib/catalog";
-import { BrandLogo } from "@/components/store/brand-logo";
-
 export const Route = createFileRoute("/checkout")({
   head: () => ({
     meta: [
-      { title: "Checkout — Água Limpa Beachwear" },
+      { title: "Finalizar compra | Água Limpa Beachwear" },
       {
         name: "description",
-        content: "Finalize seu pedido Água Limpa em uma página interna preparada para Stripe.",
+        content: "Revise suas escolhas e seus dados para a compra na Água Limpa.",
       },
-      { property: "og:title", content: "Checkout — Água Limpa Beachwear" },
-      {
-        property: "og:description",
-        content: "Checkout interno Água Limpa, com área visual pronta para Stripe.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Checkout,
 });
-
-const shipping = 0;
-const Field = ({
+function Field({
   label,
+  name,
   placeholder,
+  autoComplete,
   type = "text",
   required = true,
 }: {
   label: string;
+  name: string;
   placeholder: string;
+  autoComplete?: string;
   type?: string;
   required?: boolean;
-}) => (
-  <label className="text-xs font-semibold uppercase text-foreground">
-    {label}
-    <Input
-      className="mt-2 h-11 bg-card"
-      placeholder={placeholder}
-      type={type}
-      required={required}
-    />
-  </label>
-);
-
+}) {
+  return (
+    <label>
+      {label}
+      <Input
+        name={name}
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        type={type}
+        required={required}
+        className="mt-2 h-12"
+      />
+    </label>
+  );
+}
 function Checkout() {
-  const { items, subtotal } = useStore();
-  const [payment, setPayment] = useState("Cartão");
-  const [complete, setComplete] = useState(false);
-  const total = subtotal + shipping;
-  const methods = [
-    { name: "Cartão", text: "Pronto para Stripe", icon: <CreditCard /> },
-    { name: "Pix", text: "Confirmação manual", icon: <QrCode /> },
-    { name: "Boleto", text: "Ativar depois", icon: <Landmark /> },
-  ];
-  if (complete)
+  const { items, subtotal, count } = useStore();
+  if (!items.length)
     return (
-      <main className="section-shell flex min-h-[65vh] items-center justify-center py-16">
-        <div className="w-full max-w-xl border border-border bg-card p-8 text-center shadow-sm sm:p-12">
-          <CheckCircle2 className="mx-auto h-12 w-12 text-primary" />
-          <BrandLogo className="mx-auto mt-6" />
-          <p className="eyebrow mt-8">Pedido recebido</p>
-          <h1 className="mt-3 text-5xl">Obrigada por escolher a Água Limpa</h1>
-          <p className="mt-5 leading-7 text-muted-foreground">
-            Seu pedido foi registrado nesta experiência local. Quando a chave Stripe entrar, este
-            mesmo espaço pode receber o checkout seguro embutido.
-          </p>
-          <Button asChild className="mt-8">
-            <Link to="/colecao">Continuar navegando</Link>
-          </Button>
-        </div>
+      <main id="conteudo" className="section-shell empty-state">
+        <ShoppingBag />
+        <h1>Primeiro, seu favorito.</h1>
+        <p>Escolha as peças que vão acompanhar você. Depois, encontre seu pedido por aqui.</p>
+        <Link to="/colecao" className="shop-button">
+          Explorar coleção <ArrowRight size={16} />
+        </Link>
       </main>
     );
   return (
-    <main className="bg-muted/40">
-      <section className="section-shell py-8 md:py-12">
-        <div className="grid gap-5 border border-border bg-card p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
-          <div>
-            <p className="eyebrow">Checkout Água Limpa</p>
-            <h1 className="mt-2 text-4xl md:text-6xl">Finalizar compra</h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-              Página interna pronta para receber Stripe Embedded Checkout ou Payment Element,
-              mantendo a compra dentro do site.
+    <main id="conteudo" className="section-shell py-9 md:py-14">
+      <Link to="/sacola" className="page-kicker">
+        <ArrowLeft size={13} /> Voltar à sacola
+      </Link>
+      <div className="mb-10">
+        <p className="eyebrow mb-3">Seus próximos dias de sol</p>
+        <h1 className="page-title">Quase na sua mala.</h1>
+        <p className="mt-4 text-xs text-muted-foreground">
+          Suas escolhas, seus dados e tudo pronto para o próximo passo.
+        </p>
+      </div>
+      <div className="purchase-layout">
+        <form onSubmit={(e) => e.preventDefault()}>
+          <section className="checkout-step">
+            <h2>
+              <span>01</span> Sobre você
+            </h2>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field
+                label="Nome completo"
+                name="name"
+                placeholder="Como podemos chamar você?"
+                autoComplete="name"
+              />
+              <Field
+                label="E-mail"
+                name="email"
+                placeholder="voce@email.com"
+                type="email"
+                autoComplete="email"
+              />
+              <Field
+                label="Celular"
+                name="phone"
+                placeholder="(00) 00000-0000"
+                type="tel"
+                autoComplete="tel"
+              />
+            </div>
+          </section>
+          <section className="checkout-step">
+            <h2>
+              <span>02</span> Seu endereço
+            </h2>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field
+                label="CEP"
+                name="postalCode"
+                placeholder="00000-000"
+                autoComplete="postal-code"
+              />
+              <Field
+                label="Rua / avenida"
+                name="street"
+                placeholder="Nome da rua"
+                autoComplete="address-line1"
+              />
+              <Field label="Número" name="number" placeholder="Número" />
+              <Field
+                label="Complemento"
+                name="complement"
+                placeholder="Apartamento, bloco..."
+                autoComplete="address-line2"
+                required={false}
+              />
+              <Field label="Bairro" name="neighborhood" placeholder="Seu bairro" />
+              <Field
+                label="Cidade"
+                name="city"
+                placeholder="Sua cidade"
+                autoComplete="address-level2"
+              />
+              <Field label="Estado" name="state" placeholder="UF" autoComplete="address-level1" />
+            </div>
+            <p className="mt-5 text-[11px] text-muted-foreground">
+              {subtotal >= 499
+                ? "Este pedido atingiu o valor para frete grátis."
+                : "O frete será informado antes do pagamento."}
             </p>
-          </div>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <ShieldCheck className="h-5 w-5 text-primary" />
-            <span>Ambiente preparado para pagamento seguro</span>
-          </div>
-        </div>
-      </section>
-      <section className="section-shell grid gap-8 pb-16 lg:grid-cols-[1fr_400px]">
-        <form
-          className="space-y-6"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (items.length) setComplete(true);
-          }}
-        >
-          <section className="border border-border bg-card p-5 md:p-7">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center bg-primary text-sm font-bold text-primary-foreground">
-                1
-              </span>
-              <h2 className="text-3xl">Identificação</h2>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Nome completo" placeholder="Seu nome" />
-              <Field label="E-mail" placeholder="voce@email.com" type="email" />
-              <Field label="CPF" placeholder="000.000.000-00" />
-              <Field label="Celular" placeholder="(00) 00000-0000" />
-            </div>
           </section>
-          <section className="border border-border bg-card p-5 md:p-7">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center bg-primary text-sm font-bold text-primary-foreground">
-                2
+          <section className="checkout-step border-b-0">
+            <h2>
+              <span>03</span> Pagamento
+            </h2>
+            <div
+              className="flex gap-5 border-b border-border pb-5 text-xs text-muted-foreground"
+              aria-label="Pagamento ainda indisponível"
+            >
+              <span className="flex items-center gap-2">
+                <CreditCard size={18} /> Cartão
               </span>
-              <h2 className="text-3xl">Entrega</h2>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="CEP" placeholder="00000-000" />
-              <Field label="Rua e bairro" placeholder="Rua, avenida, bairro" />
-              <Field label="Número" placeholder="123" />
-              <Field label="Cidade / UF" placeholder="Cidade — UF" />
-            </div>
-            <div className="mt-5 flex items-center justify-between border border-primary/35 bg-secondary p-4 text-sm">
-              <span>Entrega padrão · 4 a 7 dias úteis</span>
-              <strong>Grátis</strong>
-            </div>
-          </section>
-          <section className="border border-border bg-card p-5 md:p-7">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center bg-primary text-sm font-bold text-primary-foreground">
-                3
+              <span className="flex items-center gap-2">
+                <QrCode size={18} /> Pix
               </span>
-              <h2 className="text-3xl">Pagamento</h2>
             </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {methods.map((item) => (
-                <label
-                  key={item.name}
-                  className={`flex min-h-20 cursor-pointer flex-col justify-between border p-4 text-sm transition ${payment === item.name ? "border-primary bg-secondary" : "border-border bg-card hover:border-primary/60"}`}
-                >
-                  <input
-                    type="radio"
-                    name="payment"
-                    checked={payment === item.name}
-                    onChange={() => setPayment(item.name)}
-                    className="sr-only"
-                  />
-                  <span className="flex items-center gap-2 font-semibold text-foreground">
-                    <span className="text-primary [&_svg]:h-5 [&_svg]:w-5">{item.icon}</span>
-                    {item.name}
-                  </span>
-                  <span className="mt-2 text-xs text-muted-foreground">{item.text}</span>
-                </label>
-              ))}
-            </div>
-            <div className="mt-5 border border-dashed border-primary/55 bg-background p-5">
-              <div className="flex items-start gap-3">
-                <LockKeyhole className="mt-1 h-5 w-5 text-primary" />
-                <div>
-                  <p className="font-semibold">Área reservada para Stripe dentro do site</p>
-                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                    Quando `STRIPE_SECRET_KEY` e a rota de sessão forem conectadas, o formulário
-                    seguro do Stripe entra aqui sem mandar a cliente para fora da loja.
-                  </p>
-                </div>
+            <div role="status" className="flex items-start gap-3 py-6">
+              <LockKeyhole className="mt-1 h-5 w-5 shrink-0" strokeWidth={1.3} />
+              <div>
+                <p className="text-sm font-medium">Estamos preparando seu próximo verão.</p>
+                <p className="mt-2 text-xs leading-6 text-muted-foreground">
+                  O pagamento online ainda não está disponível. Nenhum pedido ou cobrança será
+                  realizado por enquanto. Suas peças continuam na sacola.
+                </p>
               </div>
             </div>
-            <Button size="lg" className="mt-6 w-full" disabled={!items.length}>
-              Finalizar pedido <ArrowRight />
+            <Button disabled className="h-12 w-full rounded-none text-xs">
+              <LockKeyhole /> Pagamento disponível em breve
             </Button>
-            <p className="mt-3 text-center text-xs text-muted-foreground">
-              Nesta reconstrução local, nenhuma cobrança real é realizada.
-            </p>
+            <a href="mailto:oi@agualimpa.com.br" className="text-link mt-5">
+              Fale com a loja <ArrowRight size={15} />
+            </a>
           </section>
         </form>
-        <aside className="order-first h-fit border border-border bg-card p-5 shadow-sm lg:order-none lg:sticky lg:top-36">
-          <div className="flex items-center justify-between gap-4">
-            <h2 className="text-3xl">Seu pedido</h2>
-            <Sparkles className="h-5 w-5 text-accent" />
+        <aside className="order-summary lg:sticky lg:top-28">
+          <div className="flex items-center justify-between gap-3">
+            <h2>Seu pedido.</h2>
+            <span className="text-[10px]">
+              {count} {count === 1 ? "peça" : "peças"}
+            </span>
           </div>
-          {items.length ? (
-            items.map((x) => (
-              <div key={x.product.id + x.size} className="flex gap-3 border-b border-border py-4">
-                <img src={x.product.image} alt="" className="h-24 w-20 object-cover" />
-                <div className="flex-1 text-sm">
-                  <strong>{x.product.name}</strong>
-                  <p className="mt-1 text-muted-foreground">
-                    {x.size} · {x.quantity} un.
+          <div className="mt-3">
+            {items.map((x) => (
+              <div
+                key={x.product.id + ":" + x.size}
+                className="flex gap-4 border-b border-border py-5"
+              >
+                <img
+                  src={x.product.image}
+                  alt={x.product.name}
+                  width={64}
+                  height={80}
+                  className="h-20 w-16 object-cover"
+                />
+                <div className="min-w-0 flex-1 text-xs">
+                  <p>{x.product.name}</p>
+                  <p className="mt-2 text-[10px] text-muted-foreground">
+                    {x.size} · {x.quantity} un. · {x.product.color}
                   </p>
-                  <p className="mt-2 font-semibold">{money(x.product.price * x.quantity)}</p>
+                  <p className="mt-3">{money(x.product.price * x.quantity)}</p>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="py-7">
-              <p className="text-sm text-muted-foreground">
-                Sua sacola está vazia. Adicione uma peça antes de continuar.
-              </p>
-              <Button asChild variant="outline" className="mt-4 w-full">
-                <Link to="/colecao">Ver coleção</Link>
-              </Button>
-            </div>
-          )}
-          <div className="mt-5 space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <strong>{money(subtotal)}</strong>
-            </div>
-            <div className="flex justify-between">
-              <span>Entrega</span>
-              <strong>{shipping ? money(shipping) : "Grátis"}</strong>
-            </div>
-            <div className="border-t border-border pt-4">
-              <div className="flex justify-between text-lg">
-                <span>Total</span>
-                <strong>{money(total)}</strong>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="mt-6 bg-secondary p-4 text-xs leading-5 text-muted-foreground">
-            Compra visualmente preparada para cartão, Pix e boleto. A ativação real depende das
-            chaves e webhook do provedor de pagamento.
+          <div className="summary-line">
+            <span>Subtotal</span>
+            <span>{money(subtotal)}</span>
           </div>
+          <div className="summary-line">
+            <span>Entrega</span>
+            <span>{subtotal >= 499 ? "Grátis" : "A calcular"}</span>
+          </div>
+          <div className="summary-line summary-total">
+            <span>{subtotal >= 499 ? "Total" : "Total dos produtos"}</span>
+            <strong>{money(subtotal)}</strong>
+          </div>
+          <Link to="/sacola" className="text-link mt-7 text-[10px]">
+            Editar minhas escolhas <ArrowRight size={14} />
+          </Link>
         </aside>
-      </section>
+      </div>
     </main>
   );
 }
