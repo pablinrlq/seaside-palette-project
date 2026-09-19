@@ -1,3 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CatalogPage } from "@/components/store/catalog-page";
-export const Route=createFileRoute("/biquinis")({head:()=>({meta:[{title:"Biquínis — Água Limpa Beachwear"},{name:"description",content:"Modelagens versáteis para combinar, amarrar e mergulhar."},{property:"og:title",content:"Biquínis — Água Limpa Beachwear"},{property:"og:description",content:"Modelagens versáteis para combinar, amarrar e mergulhar."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:()=> <CatalogPage title="Biquínis" intro="Modelagens versáteis para combinar, amarrar e mergulhar." category="Biquínis"/>});
+export const Route = createFileRoute("/biquinis")({
+  head: () => ({
+    meta: [
+      { title: "Biquínis — Água Limpa Beachwear" },
+      { name: "description", content: "Modelagens versáteis para combinar, amarrar e mergulhar." },
+      { property: "og:title", content: "Biquínis — Água Limpa Beachwear" },
+      {
+        property: "og:description",
+        content: "Modelagens versáteis para combinar, amarrar e mergulhar.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: () => (
+    <CatalogPage
+      title="Biquínis"
+      intro="Modelagens versáteis para combinar, amarrar e mergulhar."
+      category="Biquínis"
+    />
+  ),
+});

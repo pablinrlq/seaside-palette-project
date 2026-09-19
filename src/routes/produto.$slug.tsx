@@ -6,6 +6,179 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/store/product-card";
 import { useStore } from "@/components/store/store-context";
 import { useCatalog } from "@/components/store/catalog-context";
-export const Route=createFileRoute("/produto/$slug")({head:()=>({meta:[{title:"Produto — Água Limpa Beachwear"},{name:"description",content:"Conheça os detalhes desta peça Água Limpa Beachwear."},{property:"og:title",content:"Produto — Água Limpa Beachwear"},{property:"og:description",content:"Moda praia com leveza e liberdade."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:ProductPage});
-function ProductPage(){const {slug}=Route.useParams();const {products}=useCatalog();const p=products.find(item=>item.slug===slug);if(!p)return <main className="section-shell py-24 text-center"><p className="eyebrow">Produto indisponível</p><h1 className="mt-3 text-5xl">Esta peça saiu da maré</h1><p className="mt-4 text-muted-foreground">Ela pode ter sido removida ou renomeada no painel.</p><Button asChild className="mt-7"><Link to="/colecao">Ver coleção</Link></Button></main>;return <ProductDetails product={p} related={products.filter(item=>item.id!==p.id).slice(0,4)}/>}
-function ProductDetails({product:p,related}:{product:ReturnType<typeof useCatalog>["products"][number];related:ReturnType<typeof useCatalog>["products"]}){const [size,setSize]=useState(p.sizes[0]??"");const [qty,setQty]=useState(1);const [added,setAdded]=useState(false);const {add}=useStore();const soldOut=p.stock<=0;return <main className="section-shell py-6 md:py-14"><div className="mb-6 text-xs text-muted-foreground"><Link to="/colecao">Coleção</Link> / {p.name}</div><div className="grid gap-8 md:grid-cols-2 lg:gap-16"><div className="grid gap-3 sm:grid-cols-2"><img src={p.image} alt={p.name} width={960} height={1200} className="aspect-[4/5] w-full object-cover sm:col-span-2"/><img src={p.image} alt={`Detalhe de ${p.name}`} width={960} height={1200} loading="lazy" className="hidden aspect-square w-full object-cover object-top sm:block"/><img src={p.image} alt={`Textura de ${p.name}`} width={960} height={1200} loading="lazy" className="hidden aspect-square w-full object-cover object-bottom sm:block"/></div><div className="md:sticky md:top-36 md:h-fit"><div className="flex items-center justify-between"><p className="eyebrow">{p.category}</p>{p.badge&&<span className="bg-accent px-3 py-1 text-[10px] font-semibold uppercase">{p.badge}</span>}</div><h1 className="mt-2 text-5xl">{p.name}</h1><p className="mt-5 text-2xl">{money(p.price)}</p><p className="mt-1 text-sm text-muted-foreground">ou 6x de {money(p.price/6)} sem juros</p><p className="mt-7 leading-7 text-muted-foreground">{p.description}</p><div className="mt-8"><div className="mb-3 flex justify-between text-sm"><span>Tamanho</span><span className="text-muted-foreground">Guia de medidas</span></div><div className="flex flex-wrap gap-2">{p.sizes.map(s=><Button key={s} variant={size===s?"default":"outline"} className="min-w-11" onClick={()=>setSize(s)}>{s}</Button>)}</div></div><div className="mt-6 flex items-center justify-between"><p className="text-sm">Cor · {p.color}</p><p className={p.stock<=5?"text-xs font-semibold text-destructive":"text-xs text-muted-foreground"}>{soldOut?"Esgotado":p.stock<=5?`Restam ${p.stock} unidades`:`${p.stock} unidades disponíveis`}</p></div><div className="mt-8 flex flex-col gap-3 sm:flex-row"><div className="flex h-11 items-center justify-between border border-border sm:w-32"><Button variant="ghost" size="icon" onClick={()=>setQty(Math.max(1,qty-1))}><Minus/></Button><span className="w-8 text-center">{qty}</span><Button variant="ghost" size="icon" onClick={()=>setQty(Math.min(p.stock,qty+1))}><Plus/></Button></div><Button size="lg" className="flex-1" disabled={soldOut} onClick={()=>{add(p,size,qty);setAdded(true)}}>{soldOut?"Produto esgotado":added?"Adicionado à sacola":"Adicionar à sacola"}</Button></div><div className="mt-8 divide-y divide-border border-y border-border text-sm"><p className="flex gap-3 py-4"><Truck className="text-primary"/> Frete grátis acima de R$ 499</p><p className="flex gap-3 py-4"><RefreshCcw className="text-primary"/> Troca fácil em até 30 dias</p><p className="flex gap-3 py-4"><ShieldCheck className="text-primary"/> Compra segura e protegida</p></div></div></div><section className="py-16 md:py-20"><h2 className="mb-8 text-4xl">Você também pode gostar</h2><div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">{related.map(x=><ProductCard key={x.id} product={x}/>)}</div></section></main>}
+export const Route = createFileRoute("/produto/$slug")({
+  head: () => ({
+    meta: [
+      { title: "Produto — Água Limpa Beachwear" },
+      { name: "description", content: "Conheça os detalhes desta peça Água Limpa Beachwear." },
+      { property: "og:title", content: "Produto — Água Limpa Beachwear" },
+      { property: "og:description", content: "Moda praia com leveza e liberdade." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: ProductPage,
+});
+function ProductPage() {
+  const { slug } = Route.useParams();
+  const { products } = useCatalog();
+  const p = products.find((item) => item.slug === slug);
+  if (!p)
+    return (
+      <main className="section-shell py-24 text-center">
+        <p className="eyebrow">Produto indisponível</p>
+        <h1 className="mt-3 text-5xl">Esta peça saiu da maré</h1>
+        <p className="mt-4 text-muted-foreground">
+          Ela pode ter sido removida ou renomeada no painel.
+        </p>
+        <Button asChild className="mt-7">
+          <Link to="/colecao">Ver coleção</Link>
+        </Button>
+      </main>
+    );
+  return (
+    <ProductDetails product={p} related={products.filter((item) => item.id !== p.id).slice(0, 4)} />
+  );
+}
+function ProductDetails({
+  product: p,
+  related,
+}: {
+  product: ReturnType<typeof useCatalog>["products"][number];
+  related: ReturnType<typeof useCatalog>["products"];
+}) {
+  const [size, setSize] = useState(p.sizes[0] ?? "");
+  const [qty, setQty] = useState(1);
+  const [added, setAdded] = useState(false);
+  const { add } = useStore();
+  const soldOut = p.stock <= 0;
+  return (
+    <main className="section-shell py-6 md:py-14">
+      <div className="mb-6 text-xs text-muted-foreground">
+        <Link to="/colecao">Coleção</Link> / {p.name}
+      </div>
+      <div className="grid gap-8 md:grid-cols-2 lg:gap-16">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <img
+            src={p.image}
+            alt={p.name}
+            width={960}
+            height={1200}
+            className="aspect-[4/5] w-full object-cover sm:col-span-2"
+          />
+          <img
+            src={p.image}
+            alt={`Detalhe de ${p.name}`}
+            width={960}
+            height={1200}
+            loading="lazy"
+            className="hidden aspect-square w-full object-cover object-top sm:block"
+          />
+          <img
+            src={p.image}
+            alt={`Textura de ${p.name}`}
+            width={960}
+            height={1200}
+            loading="lazy"
+            className="hidden aspect-square w-full object-cover object-bottom sm:block"
+          />
+        </div>
+        <div className="md:sticky md:top-36 md:h-fit">
+          <div className="flex items-center justify-between">
+            <p className="eyebrow">{p.category}</p>
+            {p.badge && (
+              <span className="bg-accent px-3 py-1 text-[10px] font-semibold uppercase">
+                {p.badge}
+              </span>
+            )}
+          </div>
+          <h1 className="mt-2 text-5xl">{p.name}</h1>
+          <p className="mt-5 text-2xl">{money(p.price)}</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            ou 6x de {money(p.price / 6)} sem juros
+          </p>
+          <p className="mt-7 leading-7 text-muted-foreground">{p.description}</p>
+          <div className="mt-8">
+            <div className="mb-3 flex justify-between text-sm">
+              <span>Tamanho</span>
+              <span className="text-muted-foreground">Guia de medidas</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {p.sizes.map((s) => (
+                <Button
+                  key={s}
+                  variant={size === s ? "default" : "outline"}
+                  className="min-w-11"
+                  onClick={() => setSize(s)}
+                >
+                  {s}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 flex items-center justify-between">
+            <p className="text-sm">Cor · {p.color}</p>
+            <p
+              className={
+                p.stock <= 5
+                  ? "text-xs font-semibold text-destructive"
+                  : "text-xs text-muted-foreground"
+              }
+            >
+              {soldOut
+                ? "Esgotado"
+                : p.stock <= 5
+                  ? `Restam ${p.stock} unidades`
+                  : `${p.stock} unidades disponíveis`}
+            </p>
+          </div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="flex h-11 items-center justify-between border border-border sm:w-32">
+              <Button variant="ghost" size="icon" onClick={() => setQty(Math.max(1, qty - 1))}>
+                <Minus />
+              </Button>
+              <span className="w-8 text-center">{qty}</span>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setQty(Math.min(p.stock, qty + 1))}
+              >
+                <Plus />
+              </Button>
+            </div>
+            <Button
+              size="lg"
+              className="flex-1"
+              disabled={soldOut}
+              onClick={() => {
+                add(p, size, qty);
+                setAdded(true);
+              }}
+            >
+              {soldOut ? "Produto esgotado" : added ? "Adicionado à sacola" : "Adicionar à sacola"}
+            </Button>
+          </div>
+          <div className="mt-8 divide-y divide-border border-y border-border text-sm">
+            <p className="flex gap-3 py-4">
+              <Truck className="text-primary" /> Frete grátis acima de R$ 499
+            </p>
+            <p className="flex gap-3 py-4">
+              <RefreshCcw className="text-primary" /> Troca fácil em até 30 dias
+            </p>
+            <p className="flex gap-3 py-4">
+              <ShieldCheck className="text-primary" /> Compra segura e protegida
+            </p>
+          </div>
+        </div>
+      </div>
+      <section className="py-16 md:py-20">
+        <h2 className="mb-8 text-4xl">Você também pode gostar</h2>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
+          {related.map((x) => (
+            <ProductCard key={x.id} product={x} />
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}

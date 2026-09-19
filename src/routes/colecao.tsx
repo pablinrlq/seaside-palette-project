@@ -1,3 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CatalogPage } from "@/components/store/catalog-page";
-export const Route=createFileRoute("/colecao")({head:()=>({meta:[{title:"Coleção — Água Limpa Beachwear"},{name:"description",content:"Todos os essenciais para viver dias de sol com conforto e elegância."},{property:"og:title",content:"Coleção — Água Limpa Beachwear"},{property:"og:description",content:"Todos os essenciais para viver dias de sol com conforto e elegância."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:()=> <CatalogPage title="Coleção" intro="Todos os essenciais para viver dias de sol com conforto e elegância."/>});
+export const Route = createFileRoute("/colecao")({
+  head: () => ({
+    meta: [
+      { title: "Coleção — Água Limpa Beachwear" },
+      {
+        name: "description",
+        content: "Todos os essenciais para viver dias de sol com conforto e elegância.",
+      },
+      { property: "og:title", content: "Coleção — Água Limpa Beachwear" },
+      {
+        property: "og:description",
+        content: "Todos os essenciais para viver dias de sol com conforto e elegância.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: () => (
+    <CatalogPage
+      title="Coleção"
+      intro="Todos os essenciais para viver dias de sol com conforto e elegância."
+    />
+  ),
+});

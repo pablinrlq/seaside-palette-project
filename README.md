@@ -39,14 +39,14 @@ Pequenos detalhes de areia e fundos alternativos: #E8CBBB
 Crie as variáveis de cor no CSS para manter o projeto organizado:
 
 :root {
-  --areia-creme: #F5EEE5;
-  --areia-rosada: #E8CBBB;
-  --turquesa: #8FD7D4;
-  --turquesa-claro: #C9EFEB;
-  --turquesa-profundo: #4CA7A7;
-  --marrom-elegante: #7A553F;
-  --marrom-suave: #AA866F;
-  --branco-espuma: #FFFDF9;
+--areia-creme: #F5EEE5;
+--areia-rosada: #E8CBBB;
+--turquesa: #8FD7D4;
+--turquesa-claro: #C9EFEB;
+--turquesa-profundo: #4CA7A7;
+--marrom-elegante: #7A553F;
+--marrom-suave: #AA866F;
+--branco-espuma: #FFFDF9;
 }
 
 A página deve ser predominantemente creme, branca e marrom, com o turquesa aparecendo como destaque inspirado no mar. Evite roxo, azul escuro, preto dominante, neon, cores muito saturadas e gradientes fortes. Mantenha a aparência sofisticada, natural, delicada e praiana da identidade visual.

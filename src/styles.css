@@ -64,34 +64,31 @@
 }
 
 :root {
-  --areia-creme: #F5EEE5;
-  --areia-rosada: #E8CBBB;
-  --turquesa: #8FD7D4;
-  --turquesa-claro: #C9EFEB;
-  --turquesa-profundo: #4CA7A7;
-  --marrom-elegante: #7A553F;
-  --marrom-suave: #AA866F;
-  --branco-espuma: #FFFDF9;
+  --verde-mar: #3ea6a4;
+  --verde-profundo: #1d6f72;
+  --coral-vivo: #ec6f5c;
+  --marrom-logo: #7a553f;
+  --branco-espuma: #fffdf9;
   --radius: 0.25rem;
-  --background: oklch(0.947 0.018 67.9);
-  --foreground: oklch(0.45 0.063 53.5);
-  --card: oklch(0.995 0.007 79.1);
-  --card-foreground: oklch(0.45 0.063 53.5);
-  --popover: oklch(0.995 0.007 79.1);
-  --popover-foreground: oklch(0.45 0.063 53.5);
-  --primary: oklch(0.675 0.09 195.5);
-  --primary-foreground: oklch(0.995 0.007 79.1);
-  --secondary: oklch(0.858 0.041 46.2);
-  --secondary-foreground: oklch(0.45 0.063 53.5);
-  --muted: oklch(0.947 0.018 67.9);
-  --muted-foreground: oklch(0.62 0.055 52.5);
-  --accent: oklch(0.9 0.054 187.6);
-  --accent-foreground: oklch(0.45 0.063 53.5);
+  --background: oklch(0.992 0.004 196);
+  --foreground: oklch(0.31 0.052 190);
+  --card: oklch(0.999 0.002 110);
+  --card-foreground: oklch(0.31 0.052 190);
+  --popover: oklch(0.999 0.002 110);
+  --popover-foreground: oklch(0.31 0.052 190);
+  --primary: oklch(0.64 0.105 190);
+  --primary-foreground: oklch(0.995 0.004 105);
+  --secondary: oklch(0.955 0.022 186);
+  --secondary-foreground: oklch(0.29 0.06 190);
+  --muted: oklch(0.962 0.012 185);
+  --muted-foreground: oklch(0.52 0.033 195);
+  --accent: oklch(0.74 0.14 32);
+  --accent-foreground: oklch(0.995 0.004 105);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.83 0.036 53.4);
-  --input: oklch(0.83 0.036 53.4);
-  --ring: oklch(0.675 0.09 195.5);
+  --border: oklch(0.88 0.018 190);
+  --input: oklch(0.88 0.018 190);
+  --ring: oklch(0.64 0.105 190);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -154,20 +151,73 @@
     letter-spacing: 0;
     overflow-x: hidden;
   }
-  h1,h2,h3,h4 { font-family: var(--font-serif); letter-spacing: 0; }
-  a,button,input,select { outline-offset: 3px; }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    letter-spacing: 0;
+  }
+  a,
+  button,
+  input,
+  select {
+    outline-offset: 3px;
+  }
 }
 
-@utility nav-link { font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--color-foreground); transition: color .2s; &:hover { color: var(--color-primary); } }
-@utility footer-title { margin-bottom: 1rem; font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; }
-@utility section-shell { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1rem; @media (min-width: 640px) { padding-inline: 1.5rem; } }
-@utility eyebrow { font-size: .7rem; text-transform: uppercase; letter-spacing: .2em; color: var(--color-primary); font-weight: 600; }
-footer a, footer span { display:block; margin-top:.55rem; font-size:.82rem; color:var(--color-muted-foreground); }
+@utility nav-link {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--color-foreground);
+  transition: color 0.2s;
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+@utility footer-title {
+  margin-bottom: 1rem;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+@utility section-shell {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (min-width: 640px) {
+    padding-inline: 1.5rem;
+  }
+}
+@utility eyebrow {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+footer a,
+footer span {
+  display: block;
+  margin-top: 0.55rem;
+  font-size: 0.82rem;
+  color: var(--color-muted-foreground);
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @media (max-width: 380px) {
-  h1 { overflow-wrap: anywhere; }
+  h1 {
+    overflow-wrap: anywhere;
+  }
 }
