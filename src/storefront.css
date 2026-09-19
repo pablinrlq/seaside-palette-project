@@ -68,6 +68,8 @@ html {
 .header-logo {
   width: 168px;
   display: block;
+  aspect-ratio: 3.6;
+  overflow: hidden;
 }
 .header-logo img {
   aspect-ratio: 3;
@@ -214,7 +216,7 @@ html {
   border-radius: 50%;
   background: var(--accent);
 }
-.campaign-content h1 {
+.campaign-content h1:not(.sr-only) {
   margin: 24px 0 18px;
   font-size: 112px;
   font-weight: 400;
@@ -653,6 +655,64 @@ html {
 .site-footer {
   background: var(--primary);
   color: white;
+}
+.footer-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-block: 22px;
+}
+.footer-compact nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+.footer-compact nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 12px;
+}
+.footer-compact .footer-brand {
+  grid-column: auto;
+}
+.footer-compact .footer-brand img {
+  width: 144px;
+}
+.campaign-content > .sr-only {
+  margin: 0;
+}
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+}
+[data-slot="dialog-content"],
+[data-slot="sheet-content"] {
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media (max-width: 767px) {
+  .footer-bottom {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  .footer-compact {
+    gap: 8px;
+    padding-block: 14px;
+  }
+  .footer-compact nav {
+    gap: 16px;
+  }
 }
 .footer-top {
   padding-top: 66px;

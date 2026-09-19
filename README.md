@@ -17,6 +17,7 @@ pnpm dev
 
 ```sh
 pnpm lint
+pnpm test
 pnpm exec tsc --noEmit
 pnpm build
 ```
@@ -36,12 +37,15 @@ asset, its prompt, the updated flows and verification.
 - Cart persisted in the browser, with independent quantities per size.
 - Internal checkout layout; payments remain disabled until a real provider and
   order backend are connected.
-- The existing admin screen edits a browser-local catalog. Its client-side
-  password gate is not production authentication.
+- Server-authenticated administration: orders, product catalog, inventory,
+  customers, expenses, cash flow, estimated profit and audit history.
+- Local development data persists on the server. Supabase production integration
+  and a private SQL migration are prepared; credentials must still be configured.
 
-Product/catalog data, stock and cart totals must be verified by a backend before
-real orders are accepted. The current browser data is not shared across devices.
-Customer contact/address fields are not sent or persisted.
+Public checkout fields are not submitted while payment integration is pending.
+Manual orders entered in the admin panel are persisted and may contain personal
+data. See [administration setup and limitations](docs/admin-setup.md) before
+production use. No payment is charged or refunded by the current admin panel.
 
 ## Repository
 

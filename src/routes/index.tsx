@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, ArrowUpRight, Sun, Waves, Truck, MoveUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Sun, Waves, Truck, MoveUpRight } from "lucide-react";
 import { useState } from "react";
 import hero from "@/assets/hero-beach.jpg";
 import campaign from "@/assets/campaign-wide.webp";
@@ -63,11 +63,7 @@ function Index() {
           <p className="campaign-eyebrow">
             <span /> A estação é sua.
           </p>
-          <h1 aria-label="Água Limpa Beachwear">
-            Água
-            <br />
-            <em>Limpa.</em>
-          </h1>
+          <h1 className="sr-only">Moda praia para o seu próximo verão</h1>
           <p className="campaign-subtitle">Vista a liberdade de ser você.</p>
           <Link to="/colecao" className="shop-button shop-button-light">
             Encontrar meu verão <ArrowUpRight size={18} />
@@ -220,19 +216,6 @@ function Index() {
             Mergulhe na nossa história <ArrowUpRight size={18} />
           </Link>
           <BrandLogo seal className="editorial-seal" />
-        </div>
-      </section>
-      <section className="summer-note">
-        <div className="section-shell">
-          <Sun size={30} strokeWidth={1} />
-          <p>
-            Um lugar ao sol.
-            <br />
-            <em>Uma peça que é sua.</em>
-          </p>
-          <Link to="/colecao" className="shop-button">
-            Escolha a sua <ArrowRight size={18} />
-          </Link>
         </div>
       </section>
       <section className="section-shell contact-band">

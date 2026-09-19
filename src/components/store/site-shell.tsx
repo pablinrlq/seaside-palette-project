@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Menu, Search, ShoppingBag, Sun, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,10 @@ const nav = [
   ["/historia", "Nossa história"],
 ] as const;
 export function SiteShell({ children }: { children: ReactNode }) {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  return pathname.startsWith("/admin") ? children : <PublicShell>{children}</PublicShell>;
+}
+function PublicShell({ children }: { children: ReactNode }) {
   const [menu, setMenu] = useState(false);
   const [search, setSearch] = useState(false);
   const [query, setQuery] = useState("");
@@ -189,45 +193,19 @@ export function SiteShell({ children }: { children: ReactNode }) {
 function Footer() {
   return (
     <footer className="site-footer">
-      <div className="section-shell footer-top">
+      <div className="section-shell footer-compact">
         <div className="footer-brand">
-          <BrandLogo className="h-auto w-56 md:h-auto brightness-0 invert" />
-          <p>
-            Para a mulher que leva
-            <br />o verão dentro de si.
-          </p>
-          <span>Sol, mar & liberdade.</span>
+          <BrandLogo className="h-auto w-36 md:h-auto brightness-0 invert" />
         </div>
-        <div>
-          <h2>Seu próximo favorito</h2>
-          {nav.slice(1, 6).map(([to, label]) => (
-            <Link key={to} to={to}>
-              {label}
-            </Link>
-          ))}
-        </div>
-        <div>
-          <h2>Água Limpa</h2>
+        <nav aria-label="Informações da loja">
           <Link to="/historia">Nossa história</Link>
           <a href="mailto:oi@agualimpa.com.br">
             Fale conosco <ArrowUpRight size={13} />
           </a>
-          <Link to="/sacola">Sua sacola</Link>
-        </div>
-        <div className="footer-signature">
-          <Sun size={36} strokeWidth={1} />
-          <p>
-            Encontre
-            <br />
-            seu lugar
-            <br />
-            <em>ao sol.</em>
-          </p>
-        </div>
+        </nav>
       </div>
       <div className="section-shell footer-bottom">
         <p>© {new Date().getFullYear()} Água Limpa Beachwear</p>
-        <span>Feita para viver lá fora.</span>
         <Link to="/admin">
           Área administrativa <ArrowUpRight size={12} />
         </Link>
