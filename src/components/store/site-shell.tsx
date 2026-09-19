@@ -13,6 +13,7 @@ const nav = [
   ["/maios", "Maiôs"],
   ["/saidas", "Saídas"],
   ["/acessorios", "Acessórios"],
+  ["/historia", "Nossa história"],
 ] as const;
 export function SiteShell({ children }: { children: ReactNode }) {
   const [menu, setMenu] = useState(false);
@@ -29,26 +30,31 @@ export function SiteShell({ children }: { children: ReactNode }) {
         Frete grátis acima de R$ 499 · Checkout interno preparado · Troca fácil em 30 dias
       </div>
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/95 backdrop-blur">
-        <div className="mx-auto grid h-18 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-3 sm:h-20 sm:px-5">
+        <div className="mx-auto grid h-18 max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-3 sm:h-20 sm:gap-4 sm:px-5 lg:gap-6">
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setMenu(!menu)}
             aria-label={menu ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menu}
+            aria-controls="mobile-navigation"
           >
             {menu ? <X /> : <Menu />}
           </Button>
-          <nav className="hidden items-center gap-6 md:flex">
-            {nav.slice(0, 3).map(([to, label]) => (
+          <Link to="/" className="min-w-0 justify-self-center lg:justify-self-start">
+            <BrandLogo className="h-auto w-36 max-w-full sm:w-44 md:h-auto" />
+          </Link>
+          <nav
+            aria-label="Navegação principal"
+            className="hidden min-w-0 flex-nowrap items-center justify-center gap-4 lg:flex xl:gap-6"
+          >
+            {nav.map(([to, label]) => (
               <Link key={to} to={to} className="nav-link">
                 {label}
               </Link>
             ))}
           </nav>
-          <Link to="/" className="justify-self-center">
-            <BrandLogo />
-          </Link>
           <div className="flex justify-self-end gap-0 sm:gap-1">
             <Button
               variant="ghost"
@@ -73,19 +79,13 @@ export function SiteShell({ children }: { children: ReactNode }) {
             </Button>
           </div>
         </div>
-        <nav className="mx-auto hidden max-w-7xl justify-center gap-8 border-t border-border/50 py-3 md:flex">
-          {nav.slice(3).map(([to, label]) => (
-            <Link key={to} to={to} className="nav-link">
-              {label}
-            </Link>
-          ))}
-          <Link to="/historia" className="nav-link">
-            Nossa história
-          </Link>
-        </nav>
         {menu && (
-          <nav className="border-t border-border bg-card px-5 pb-7 pt-3 md:hidden">
-            {[...nav, ["/historia", "Nossa história"] as const].map(([to, label]) => (
+          <nav
+            id="mobile-navigation"
+            aria-label="Navegação mobile"
+            className="max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-border bg-card px-5 pb-7 pt-3 lg:hidden"
+          >
+            {nav.map(([to, label]) => (
               <Link
                 key={to}
                 to={to}

@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 type BrandLogoProps = {
   compact?: boolean;
   seal?: boolean;
@@ -16,7 +18,7 @@ export function BrandLogo({ compact = false, seal = false, className = "" }: Bra
     <img
       src={src}
       alt="Água Limpa Beachwear"
-      className={`${size} object-contain ${className}`}
+      className={cn(size, "object-contain", className)}
       decoding="async"
     />
   );

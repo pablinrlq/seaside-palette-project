@@ -167,6 +167,8 @@
 }
 
 @utility nav-link {
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0;
